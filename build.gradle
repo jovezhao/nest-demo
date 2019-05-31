@@ -1,0 +1,92 @@
+//buildscript {
+//    ext {
+//        springBootVersion = "2.1.4.RELEASE"
+//    }
+//    dependencies {
+//        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+//    }
+//    repositories {
+//        mavenCentral()
+//    }
+//}
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.1.4.RELEASE'
+}
+//apply plugin: 'java'
+//apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+
+group 'com.guoshouxiang.nest'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+configurations {
+    mybatisGenerator
+}
+
+dependencies {
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-quartz'
+    implementation 'mysql:mysql-connector-java'
+
+    compile 'com.guoshouxiang.nest:nest-spring-boot-starter:1.1-SNAPSHOT'
+    compile 'com.guoshouxiang.nest:nest-mybatis-pagination-plugin:1.1-SNAPSHOT'
+    compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.0.1'
+
+    // https://mvnrepository.com/artifact/io.springfox/springfox-swagger2
+    compile 'io.springfox:springfox-swagger2:2.9.2'
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+    compile(group: 'net.sf.dozer', name: 'dozer', version: '5.5.1') {
+//        exclude group :'org.slf4j',module: 'slf4j-log4j12'
+    }
+
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    mybatisGenerator 'org.mybatis.generator:mybatis-generator-core:1.3.7'
+    mybatisGenerator 'mysql:mysql-connector-java:8.0.15'
+}
+
+
+def getDbProperties = {
+    def properties = new Properties()
+    file("src/main/resources/application.properties").withInputStream { inputStream ->
+        properties.load(inputStream)
+    }
+    properties
+}
+
+task mybatisGenerate {
+    doLast {
+        def properties = getDbProperties()
+        ant.properties['driverClass'] = properties.getProperty("spring.datasource.driver-class-name")
+        ant.properties['connectionURL'] = properties.getProperty("spring.datasource.url")
+        ant.properties['userId'] = properties.getProperty("spring.datasource.username")
+        ant.properties['password'] = properties.getProperty("spring.datasource.password")
+        ant.taskdef(
+                name: 'mbgenerator',
+                classname: 'org.mybatis.generator.ant.GeneratorAntTask',
+                classpath: configurations.mybatisGenerator.asPath
+        )
+        ant.mbgenerator(overwrite: true,
+                configfile: 'src/main/resources/mybatis-generator.xml', verbose: true) {
+            propertyset {
+                propertyref(name: 'userId')
+                propertyref(name: 'driverClass')
+                propertyref(name: 'connectionURL')
+                propertyref(name: 'password')
+            }
+        }
+    }
+}
+
