@@ -1,7 +1,7 @@
-package com.guoshouxiang.nest.demo.adapter.controllers;
+package com.guoshouxiang.nest.demo.context.controllers;
 
-import com.guoshouxiang.nest.demo.context.models.User;
-import com.guoshouxiang.nest.demo.context.UserService;
+import com.guoshouxiang.nest.demo.application.UserDto;
+import com.guoshouxiang.nest.demo.application.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,8 +21,8 @@ public class UserController {
 
     @GetMapping("/get")
     public String get() {
-        User user = userService.get("22d4bdfc-94c9-4bbc-9124-985cca679e07");
-        return user.getId().toValue();
+        UserDto user = userService.get("22d4bdfc-94c9-4bbc-9124-985cca679e07");
+        return user.getId();
     }
 }
 

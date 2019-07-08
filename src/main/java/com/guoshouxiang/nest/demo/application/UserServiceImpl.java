@@ -1,21 +1,27 @@
-package com.guoshouxiang.nest.demo.context;
+package com.guoshouxiang.nest.demo.application;
 
 import com.guohuoxiang.nest.mybatis.pagination.PageList;
+import com.guohuoxiang.nest.mybatis.pagination.PageParames;
 import com.guoshouxiang.nest.context.event.EventBus;
 import com.guoshouxiang.nest.context.loader.ConstructEntityLoader;
 import com.guoshouxiang.nest.context.loader.EntityLoader;
 import com.guoshouxiang.nest.context.loader.RepositoryEntityLoader;
 import com.guoshouxiang.nest.context.model.StringIdentifier;
+import com.guoshouxiang.nest.demo.domain.queries.UserQuery;
 import com.guoshouxiang.nest.spring.AppService;
-import com.guoshouxiang.nest.demo.context.models.User;
+import com.guoshouxiang.nest.demo.domain.User;
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;
 
 @AppService
-public class UserService {
+public class UserServiceImpl implements UserService {
     @Autowired
     private EventBus eventBus;
+
+    @Autowired
+    private Mapper beanMapper;
 
     public void create(String userName, String pwd) {
         EntityLoader<User> entityLoader = new ConstructEntityLoader<>(User.class);
@@ -24,17 +30,21 @@ public class UserService {
 
     }
 
-    public User get(String id) {
+    public UserDto get(String id) {
         EntityLoader<User> entityLoader = new RepositoryEntityLoader<>(User.class);
         User user = entityLoader.create(StringIdentifier.valueOf(id));
-        return user;
+        UserDto userDto = beanMapper.map(user, UserDto.class);
+        return userDto;
     }
 
     @Autowired
-    private QueryForUser queryForUser;
+    private UserQuery userQuery;
 
-    public PageList<User> query() {
-        PageList<User> list = queryForUser.getUserList(0, 5);
-        return list;
+    public PageList<UserDto> query() {
+        PageList<User> list = userQuery.getList(PageParames.create(0,5));
+        PageList<UserDto> userDtos = list.mapPageList(p -> beanMapper.map(p, UserDto.class));
+        return userDtos;
     }
+
+
 }

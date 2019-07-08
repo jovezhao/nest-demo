@@ -1,4 +1,4 @@
-package com.guoshouxiang.nest.demo.adapter.tasks;
+package com.guoshouxiang.nest.demo.context.tasks;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

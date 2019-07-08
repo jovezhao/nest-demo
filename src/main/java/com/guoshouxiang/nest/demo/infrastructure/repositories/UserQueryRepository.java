@@ -1,26 +1,26 @@
-package com.guoshouxiang.nest.demo.context;
+package com.guoshouxiang.nest.demo.infrastructure.repositories;
 
 import com.guohuoxiang.nest.mybatis.pagination.PageList;
 import com.guohuoxiang.nest.mybatis.pagination.PageParames;
 import com.guoshouxiang.nest.context.loader.EntityLoader;
 import com.guoshouxiang.nest.context.loader.RepositoryEntityLoader;
 import com.guoshouxiang.nest.context.model.StringIdentifier;
-import com.guoshouxiang.nest.demo.context.models.User;
-import com.guoshouxiang.nest.demo.context.queries.UserQuery;
+import com.guoshouxiang.nest.demo.domain.User;
+import com.guoshouxiang.nest.demo.infrastructure.dao.queries.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import com.guoshouxiang.nest.demo.domain.queries.UserQuery;
 
 @Component
-public class QueryForUser {
+public class UserQueryRepository implements UserQuery {
     @Autowired
-    private UserQuery userQuery;
-
-    public PageList<User> getUserList(int page, int count) {
+    private UserMapper userMapper;
+    @Override
+    public PageList<User> getList(PageParames pageParames) {
         EntityLoader<User> userEntityLoader = new RepositoryEntityLoader<>(User.class);
 
-        PageList<User> users = userQuery.getList(PageParames.create(page, count))
+        PageList<User> users = userMapper.getList(pageParames)
                 .mapPageList(p -> userEntityLoader.create(StringIdentifier.valueOf(p)));
         return users;
-
     }
 }

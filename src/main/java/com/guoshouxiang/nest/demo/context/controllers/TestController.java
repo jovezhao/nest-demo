@@ -1,6 +1,6 @@
-package com.guoshouxiang.nest.demo.adapter.controllers;
+package com.guoshouxiang.nest.demo.context.controllers;
 
-import com.guoshouxiang.nest.demo.context.UserService;
+import com.guoshouxiang.nest.demo.application.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

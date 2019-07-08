@@ -1,4 +1,4 @@
-package com.guoshouxiang.nest.demo.context.models;
+package com.guoshouxiang.nest.demo.domain;
 
 import com.guoshouxiang.nest.context.model.BaseEntity;
 import com.guoshouxiang.nest.context.model.StringIdentifier;
@@ -25,5 +25,9 @@ public class User extends BaseEntity<StringIdentifier> {
     protected boolean verify() {
         if (password.length() < 6) return false;
         return true;
+    }
+
+    public void changePassword(String newPassword) {
+        this.password = newPassword;
     }
 }

@@ -1,10 +1,10 @@
-package com.guoshouxiang.nest.demo.context.models.repositories;
+package com.guoshouxiang.nest.demo.infrastructure.repositories;
 
 
 import com.guoshouxiang.nest.context.loader.EntityLoader;
 import com.guoshouxiang.nest.context.model.Identifier;
 import com.guoshouxiang.nest.context.repository.Repository;
-import com.guoshouxiang.nest.demo.context.models.User;
+import com.guoshouxiang.nest.demo.domain.User;
 import com.guoshouxiang.nest.demo.infrastructure.dao.UserDmo;
 import com.guoshouxiang.nest.demo.infrastructure.dao.mapper.UserDmoMapper;
 import org.dozer.Mapper;
