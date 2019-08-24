@@ -41,6 +41,7 @@ dependencies {
 
     compile 'com.guoshouxiang.nest:nest-spring-boot-starter:1.1-SNAPSHOT'
     compile 'com.guoshouxiang.nest:nest-mybatis-pagination-plugin:1.1-SNAPSHOT'
+    compile 'com.guoshouxiang.nest:nest-activemq:1.1-SNAPSHOT'
     compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.0.1'
 
     // https://mvnrepository.com/artifact/io.springfox/springfox-swagger2

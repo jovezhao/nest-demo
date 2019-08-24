@@ -2,7 +2,10 @@ package com.guoshouxiang.nest.demo.application;
 
 import com.guohuoxiang.nest.mybatis.pagination.PageList;
 import com.guohuoxiang.nest.mybatis.pagination.PageParames;
+import com.guoshouxiang.nest.context.EntityFactory;
+import com.guoshouxiang.nest.context.event.BaseEvent;
 import com.guoshouxiang.nest.context.event.EventBus;
+import com.guoshouxiang.nest.context.event.EventData;
 import com.guoshouxiang.nest.context.loader.ConstructEntityLoader;
 import com.guoshouxiang.nest.context.loader.EntityLoader;
 import com.guoshouxiang.nest.context.loader.RepositoryEntityLoader;
@@ -37,14 +40,31 @@ public class UserServiceImpl implements UserService {
         return userDto;
     }
 
+
     @Autowired
     private UserQuery userQuery;
 
     public PageList<UserDto> query() {
-        PageList<User> list = userQuery.getList(PageParames.create(0,5));
+        PageList<User> list = userQuery.getList(PageParames.create(0, 5));
         PageList<UserDto> userDtos = list.mapPageList(p -> beanMapper.map(p, UserDto.class));
         return userDtos;
     }
 
+    @Override
+    public void changePassword(String id, String pwd) {
+        User user = EntityFactory.load(User.class, StringIdentifier.valueOf(id));
+
+        PasswordChangedEventData eventData = new PasswordChangedEventData();
+        eventData.setNewPassword(pwd);
+        eventData.setUserId(id);
+        eventData.setOldPassword(user.getPassword());
+
+
+        user.changePassword(pwd);
+
+
+        eventBus.publish(eventData);
+    }
 
 }
+

@@ -24,5 +24,7 @@ public class UserController {
         UserDto user = userService.get("22d4bdfc-94c9-4bbc-9124-985cca679e07");
         return user.getId();
     }
+
+
 }
 

@@ -1,6 +1,9 @@
 package com.guoshouxiang.nest.demo;
 
 import com.guohuoxiang.nest.mybatis.pagination.PageListPlugin;
+import com.guoshouxiang.nest.activemq.ActiveMQMessageChannel;
+import com.guoshouxiang.nest.configuration.EventConfiguration;
+import com.guoshouxiang.nest.container.BeanFinder;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,4 +41,23 @@ public class Application {
         dozerBeanMapper.setMappingFiles(mappingFileUrlList);
         return dozerBeanMapper;
     }
+
+    @Bean("ACTIVEMQ_CHANNEL")
+    public ActiveMQMessageChannel activeMQMessageChannel(BeanFinder beanFinder){
+        String brokers="tcp://127.0.0.1:61616";
+        ActiveMQMessageChannel messageChannel=new ActiveMQMessageChannel(beanFinder,brokers);
+        return messageChannel;
+    }
+
+    @Bean("change_password")
+    public EventConfiguration changePasswordEvent(){
+        EventConfiguration eventConfiguration=new EventConfiguration();
+        eventConfiguration.setEventCode("change_password");
+        eventConfiguration.setMessageChannelCode("ACTIVEMQ_CHANNEL");
+
+        return eventConfiguration;
+    }
+
+
+
 }
