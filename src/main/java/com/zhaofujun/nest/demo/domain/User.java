@@ -1,7 +1,7 @@
 package com.zhaofujun.nest.demo.domain;
 
-import com.guoshouxiang.nest.context.model.BaseEntity;
-import com.guoshouxiang.nest.context.model.StringIdentifier;
+import com.zhaofujun.nest.context.model.StringIdentifier;
+import com.zhaofujun.nest.core.BaseEntity;
 
 public class User extends BaseEntity<StringIdentifier> {
     private String username;

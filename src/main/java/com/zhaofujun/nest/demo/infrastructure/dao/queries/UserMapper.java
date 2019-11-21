@@ -1,7 +1,7 @@
 package com.zhaofujun.nest.demo.infrastructure.dao.queries;
 
-import com.guohuoxiang.nest.mybatis.pagination.PageList;
-import com.guohuoxiang.nest.mybatis.pagination.PageParames;
+import com.zhaofujun.nest.mybatis.paging.PageList;
+import com.zhaofujun.nest.mybatis.paging.PageParames;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

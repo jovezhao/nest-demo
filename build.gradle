@@ -1,24 +1,10 @@
-//buildscript {
-//    ext {
-//        springBootVersion = "2.1.4.RELEASE"
-//    }
-//    dependencies {
-//        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-//    }
-//    repositories {
-//        mavenCentral()
-//    }
-//}
 
 plugins {
     id 'java'
     id 'org.springframework.boot' version '2.1.6.RELEASE'
 }
-//apply plugin: 'java'
-//apply plugin: 'org.springframework.boot'
+
 apply plugin: 'io.spring.dependency-management'
-
-
 group 'com.guoshouxiang.nest'
 version '1.0-SNAPSHOT'
 
@@ -39,9 +25,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-quartz'
     implementation 'mysql:mysql-connector-java'
 
-    compile 'com.guoshouxiang.nest:nest-spring-boot-starter:1.1-SNAPSHOT'
-    compile 'com.guoshouxiang.nest:nest-mybatis-pagination-plugin:1.1-SNAPSHOT'
-    compile 'com.guoshouxiang.nest:nest-activemq:1.1-SNAPSHOT'
+    compile 'com.zhaofujun.nest:nest-plus-spring-boot-starter:2.0.RELEASE'
+    compile 'com.zhaofujun.nest:nest-plus-mybatis-paging:2.0.RELEASE'
+    compile 'com.zhaofujun.nest:nest-plus-spring-activemq:2.0.RELEASE'
     compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.0.1'
 
     // https://mvnrepository.com/artifact/io.springfox/springfox-swagger2

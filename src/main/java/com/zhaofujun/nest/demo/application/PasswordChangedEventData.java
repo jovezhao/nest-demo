@@ -1,6 +1,6 @@
 package com.zhaofujun.nest.demo.application;
 
-import com.guoshouxiang.nest.context.event.EventData;
+import com.zhaofujun.nest.core.EventData;
 
 public class PasswordChangedEventData extends EventData {
      private String oldPassword;
@@ -33,6 +33,8 @@ public class PasswordChangedEventData extends EventData {
 
      @Override
      public String getEventCode() {
-         return "change_password";
+         return EVENT_CODE;
      }
+
+     public final static String EVENT_CODE="change_password";
  }

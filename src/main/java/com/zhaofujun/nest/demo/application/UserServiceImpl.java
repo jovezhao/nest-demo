@@ -1,16 +1,15 @@
 package com.zhaofujun.nest.demo.application;
 
-import com.guohuoxiang.nest.mybatis.pagination.PageList;
-import com.guohuoxiang.nest.mybatis.pagination.PageParames;
-import com.guoshouxiang.nest.context.EntityFactory;
-import com.guoshouxiang.nest.context.event.EventBus;
-import com.guoshouxiang.nest.context.loader.ConstructEntityLoader;
-import com.guoshouxiang.nest.context.loader.EntityLoader;
-import com.guoshouxiang.nest.context.loader.RepositoryEntityLoader;
-import com.guoshouxiang.nest.context.model.StringIdentifier;
+
+import com.zhaofujun.nest.context.model.StringIdentifier;
+import com.zhaofujun.nest.core.EntityFactory;
+import com.zhaofujun.nest.core.EntityLoader;
+import com.zhaofujun.nest.core.EventBus;
 import com.zhaofujun.nest.demo.domain.queries.UserQuery;
-import com.guoshouxiang.nest.spring.AppService;
 import com.zhaofujun.nest.demo.domain.User;
+import com.zhaofujun.nest.mybatis.paging.PageList;
+import com.zhaofujun.nest.mybatis.paging.PageParames;
+import com.zhaofujun.nest.spring.AppService;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -25,15 +24,13 @@ public class UserServiceImpl implements UserService {
     private Mapper beanMapper;
 
     public void create(String userName, String pwd) {
-        EntityLoader<User> entityLoader = new ConstructEntityLoader<>(User.class);
-        User user = entityLoader.create(StringIdentifier.valueOf(UUID.randomUUID().toString()));
+        User user = EntityFactory.create(User.class, StringIdentifier.valueOf(UUID.randomUUID().toString()));
         user.init(userName, pwd);
 
     }
 
     public UserDto get(String id) {
-        EntityLoader<User> entityLoader = new RepositoryEntityLoader<>(User.class);
-        User user = entityLoader.create(StringIdentifier.valueOf(id));
+        User user = EntityFactory.load(User.class,StringIdentifier.valueOf(id));
         UserDto userDto = beanMapper.map(user, UserDto.class);
         return userDto;
     }

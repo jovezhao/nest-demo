@@ -1,9 +1,8 @@
 package com.zhaofujun.nest.demo.infrastructure.repositories;
 
-
-import com.guoshouxiang.nest.context.loader.EntityLoader;
-import com.guoshouxiang.nest.context.model.Identifier;
-import com.guoshouxiang.nest.context.repository.Repository;
+import com.zhaofujun.nest.core.EntityLoader;
+import com.zhaofujun.nest.core.Identifier;
+import com.zhaofujun.nest.core.Repository;
 import com.zhaofujun.nest.demo.domain.User;
 import com.zhaofujun.nest.demo.infrastructure.dao.UserDmo;
 import com.zhaofujun.nest.demo.infrastructure.dao.mapper.UserDmoMapper;
@@ -36,17 +35,28 @@ public class UserRepository implements Repository<User> {
     }
 
     @Override
-    public void save(User user) {
+    public void insert(User user) {
         UserDmo record = new UserDmo();
         record.setId(user.getId().toValue());
         record.setPassword(user.getPassword());
         record.setUsername(user.getUsername());
         userDmoMapper.insert(record);
-
     }
 
     @Override
-    public void remove(User user) {
+    public void update(User user) {
+        UserDmo record = new UserDmo();
+        record.setId(user.getId().toValue());
+        record.setPassword(user.getPassword());
+        record.setUsername(user.getUsername());
+        userDmoMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public void delete(User user) {
+        userDmoMapper.deleteByPrimaryKey(user.getId().getId());
 
     }
+
+
 }
